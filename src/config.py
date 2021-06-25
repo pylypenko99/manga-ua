@@ -8,10 +8,10 @@ HEADERS = {
 
 def logs(debug=False):
     if debug:
-        logging.basicConfig(level=logging.DEBUG, datefmt='%d-%b-%y %H:%M:%S',
+        logging.basicConfig(level=logging.DEBUG, datefmt='%H:%M:%S',
                             format='%(levelname)s %(asctime)s: %(message)s')
     else:
-        logging.basicConfig(level=logging.INFO, datefmt='%d-%b-%y %H:%M:%S',
+        logging.basicConfig(level=logging.INFO, datefmt='%H:%M:%S',
                             format='%(levelname)s %(asctime)s: %(message)s')
 
 

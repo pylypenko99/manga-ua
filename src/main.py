@@ -1,4 +1,3 @@
-#!/bin/env python
 import getopt
 import questionary
 
@@ -24,7 +23,6 @@ def main(argv, QUERY=None, download=False, outputpath=''):
             print(f"{usage()}")
             exit(0)
         elif opt in ("-D", "--debug"):
-            print("LOGS ARE TRUE")
             logs(True)
         elif opt in ("-o", "--output"):
             outputpath = arg
