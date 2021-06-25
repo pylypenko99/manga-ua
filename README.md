@@ -2,6 +2,8 @@
 
 Завантажуйте манґу українською на manga.in.ua з комфортного віконця свого терміналу.
 
+![](https://raw.githubusercontent.com/cyborg-ubyvtsya/manga-ua/main/img/demo.png)
+
 ## Інсталяція
 
 1. `git clone https://github.com/cyborg-ubyvtsya/manga-ua.git`
