@@ -6,13 +6,6 @@ from search import SearchMangaInUa
 from kaomoji import check_search_results, check_volumes, check_downloaded
 from config import usage, HEADERS, SITE_URL, logs
 
-'''
-TODO:
-    - Proper INFO logs for old pages
-    - Download chapters if no volumes are available (critical)
-    - Download multiple titles
-'''
-
 
 def manga_choice(search_results):
     return questionary.select("Оберіть бажаний тайтл.", choices=search_results).ask()
