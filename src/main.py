@@ -15,9 +15,6 @@ TODO:
 
 
 def manga_choice(search_results):
-    manga_list = list()
-    for i in search_results.keys():
-        manga_list.append(i)
     return questionary.select("Оберіть бажаний тайтл.", choices=search_results).ask()
 
 
@@ -45,12 +42,11 @@ def main(argv, QUERY=None, download=False, outputpath=''):
 
     search = SearchMangaInUa(SITE_URL, HEADERS)
 
-    if not QUERY:
-        QUERY = questionary.text("Введіть назву манґи: ").ask()
-    search_results = search.get_search_results(QUERY)
-    check_search_results(search_results)
-
     if download:
+        if not QUERY:
+            QUERY = questionary.text("Введіть назву манґи: ").ask()
+        search_results = search.get_search_results(QUERY)
+        check_search_results(search_results)
         selected_manga = manga_choice(search_results)
 
         if type(selected_manga) == list:
@@ -68,8 +64,11 @@ def main(argv, QUERY=None, download=False, outputpath=''):
 
             downloaded = search.download_all_volumes(manga_volumes, outputpath)
             check_downloaded(downloaded)
-    else:
+    elif not download:
+        if not QUERY:
+            QUERY = questionary.text("Введіть назву манґи: ").ask()
+        search_results = search.get_search_results(QUERY)
+        check_search_results(search_results)
         for i in search_results:
-            questionary.print(f"{i}: {search_results[i]}", style="fg:ansiblue")
-
-    # search.print_params()
+            questionary.print(
+                f"{i}: {search_results[i]}", style="fg:ansiblue")

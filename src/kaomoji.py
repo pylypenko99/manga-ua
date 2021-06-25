@@ -21,12 +21,15 @@ def get_emoji(emotion):
 def check_volumes(manga_volumes):
     if not manga_volumes:
         questionary.print(f"Не вдалося завантажити манґу {get_emoji('pain')}", style="bold italic")
+        exit(1)
 
 def check_downloaded(downloaded):
     if not downloaded:
         questionary.print(f"Завантаження не пройшло успішно... {get_emoji('confusion')}", style="bold italic")
+        exit(1)
     else:
         questionary.print(f"Завантажено успішно! {get_emoji('joy')}", style="italic")
+        exit(0)
 
 def check_search_results(search_results):
     if not search_results:
