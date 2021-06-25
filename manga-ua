@@ -1,0 +1,13 @@
+#!/bin/env python
+import sys
+import getopt
+
+sys.path.append('src')
+import main
+
+
+if __name__ == "__main__":
+    try:
+        main.main(sys.argv[1:])
+    except KeyboardInterrupt:
+        exit(0)
