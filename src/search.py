@@ -1,5 +1,6 @@
 import requests
 import os
+import time
 from bs4 import BeautifulSoup as bs
 from config import logging
 
@@ -116,12 +117,24 @@ class SearchMangaInUa:
             logging.info(f"{error}")
             return None
 
-    def download_all_volumes(self, volumes=None, desired_path=''):
+    def download_all_volumes(self, delay, volumes=None, desired_path=''):
         def mkdir(path):
             try:
                 os.mkdir(path)
             except OSError as error:
                 logging.info(f"Директорія '{path}' вже існує...\n{error}")
+
+        def sleep(delay, download_list, current_item):
+            last_item = list(download_list)[-1]
+            if current_item != last_item:
+                time.sleep(delay)
+
+        def write(download_request, download_title):
+            with open(download_title, "wb") as download:
+                download.write(download_request.content)
+                logging.info(
+                    f"Завантажено '{download_title}'.")
+
 
         def download(path, volumes):
             for i in volumes:
@@ -134,9 +147,8 @@ class SearchMangaInUa:
                 else:
                     download_request = requests.get(
                         volumes[i][0], headers=self.headers)
-                    with open(download_title, "wb") as download:
-                        download.write(download_request.content)
-                        logging.info(f"Завантажено!")
+                    write(download_request, download_title)
+                sleep(delay, download_list=volumes, current_item=volumes)
 
         def download_alt(path, volumes):
             for i in volumes:
@@ -153,11 +165,9 @@ class SearchMangaInUa:
                     else:
                         download_request = requests.get(
                             chapter, headers=self.headers)
-                        with open(download_title, "wb") as download:
-                            download.write(download_request.content)
-                            logging.info(
-                                f"Завантажено '{download_title}'.")
+                        write(download_request, download_title)
                         count += 1
+                    sleep(delay, download_list=volumes[i], current_item=chapter)
                 count = 1
 
         if desired_path == '':
@@ -168,7 +178,6 @@ class SearchMangaInUa:
         else:
             path = desired_path + '/' + \
                 self.volume_title.replace(" / ", "_")
-
         path = path.replace("/", "\\").strip()
 
         if not volumes:
@@ -193,8 +202,6 @@ class SearchMangaInUa:
             except TypeError as error:
                 logging.error(f"{error}")
                 return False
-        else:
-            return False
 
     def print_params(self):
         print("=" * 50)

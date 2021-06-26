@@ -10,10 +10,10 @@ def manga_choice(search_results):
     return questionary.select("Оберіть бажаний тайтл.", choices=search_results).ask()
 
 
-def main(argv, QUERY=None, download=False, outputpath=''):
+def main(argv, QUERY=None, download=False, outputpath='', delay=0):
     try:
         opts, args = getopt.getopt(
-            argv, "hvdo:s:", ["help", "verbose", "download-all", "output=", "search="])
+            argv, "hvdo:s:D:", ["help", "verbose", "download-all", "output=", "search=", "delay="])
     except getopt.GetoptError:
         print(f"{usage()}")
         exit(2)
@@ -30,6 +30,8 @@ def main(argv, QUERY=None, download=False, outputpath=''):
             QUERY = arg
         elif opt in ("-d", "--download-all"):
             download = True
+        elif opt in ("-D", "--delay"):
+            delay = int(arg)
 
     search = SearchMangaInUa(SITE_URL, HEADERS)
 
@@ -45,7 +47,8 @@ def main(argv, QUERY=None, download=False, outputpath=''):
                 manga_volumes = search.get_all_volumes(i)
                 check_volumes(manga_volumes)
 
-                downloaded = search.download_all_volumes(manga_volumes)
+                downloaded = search.download_all_volumes(
+                    delay, volumes=manga_volumes, desired_path=outputpath)
                 check_downloaded(downloaded)
         else:
             selected_manga = dict(
@@ -53,7 +56,8 @@ def main(argv, QUERY=None, download=False, outputpath=''):
             manga_volumes = search.get_all_volumes(selected_manga)
             check_volumes(manga_volumes)
 
-            downloaded = search.download_all_volumes(manga_volumes, outputpath)
+            downloaded = search.download_all_volumes(
+                delay, volumes=manga_volumes, desired_path=outputpath)
             check_downloaded(downloaded)
     elif not download:
         if not QUERY:
