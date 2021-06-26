@@ -137,8 +137,7 @@ class SearchMangaInUa:
 
         def download(path, volumes):
             for i in volumes:
-                download_title = path + "/" + \
-                    i.replace(" / ", "_") + ".zip"
+                download_title = os.path.join(path, i.replace(" / ", "_") + ".zip")
                 logging.info(f"Завантажуємо '{download_title}'...")
                 if os.path.isfile(download_title):
                     logging.info(f"'{download_title}' вже існує.")
@@ -151,8 +150,7 @@ class SearchMangaInUa:
 
         def download_alt(path, volumes):
             for i in volumes:
-                download_path = path + "/" + \
-                    i.replace(" / ", "_").replace("/", "\\").strip()
+                download_path = os.path.join(path, i.replace(" / ", "_").replace("/", "\\").strip())
                 mkdir(download_path)
                 count = 1  # workaround i'm not proud of.
                 for chapter in volumes[i]:
