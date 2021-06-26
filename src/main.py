@@ -13,7 +13,7 @@ def manga_choice(search_results):
 def main(argv, QUERY=None, download=False, outputpath='', delay=0):
     try:
         opts, args = getopt.getopt(
-            argv, "hvdo:s:D:", ["help", "verbose", "download-all", "output=", "search=", "delay="])
+            argv, "hvdo:s:w:", ["help", "verbose", "download-all", "output=", "search=", "delay="])
     except getopt.GetoptError:
         print(f"{usage()}")
         exit(2)
@@ -30,7 +30,7 @@ def main(argv, QUERY=None, download=False, outputpath='', delay=0):
             QUERY = arg
         elif opt in ("-d", "--download-all"):
             download = True
-        elif opt in ("-D", "--delay"):
+        elif opt in ("-w", "--delay"):
             delay = int(arg)
 
     search = SearchMangaInUa(SITE_URL, HEADERS)

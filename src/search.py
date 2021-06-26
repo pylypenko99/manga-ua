@@ -135,7 +135,6 @@ class SearchMangaInUa:
                 logging.info(
                     f"Завантажено '{download_title}'.")
 
-
         def download(path, volumes):
             for i in volumes:
                 download_title = path + "/" + \
@@ -167,7 +166,8 @@ class SearchMangaInUa:
                             chapter, headers=self.headers)
                         write(download_request, download_title)
                         count += 1
-                    sleep(delay, download_list=volumes[i], current_item=chapter)
+                    sleep(
+                        delay, download_list=volumes[i], current_item=chapter)
                 count = 1
 
         if desired_path == '':
