@@ -4,19 +4,14 @@
 
 ![](https://raw.githubusercontent.com/cyborg-ubyvtsya/manga-ua/main/img/demo.png)
 
-## Інсталяція
-
-1. `git clone https://github.com/cyborg-ubyvtsya/manga-ua.git`
-2. Перейдіть в директорію репозиторія
-3. `pip3 install -r requirements.txt`
-4. `./manga-ua -h`
 
 ## Використання
 
+1. `git clone https://github.com/cyborg-ubyvtsya/manga-ua.git`
+2. `cd manga-ua`
+3. `pip3 install -r requirements.txt`
+4. Перегляньте всі доступні опції: `./manga-ua -h`
+
 В директорії завантаженого репозиторію виконайте:
 
-`./manga-ua -d -s "<ваш запит>"`
-
-Або перегляньте всі доступні опції:
-
-`./manga-ua -h`
+5. `./manga-ua -d -s "<ваш запит>"`
