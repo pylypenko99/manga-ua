@@ -137,7 +137,8 @@ class SearchMangaInUa:
 
         def download(path, volumes):
             for i in volumes:
-                download_title = os.path.join(path, i.replace(" / ", "_") + ".zip")
+                download_title = os.path.join(
+                    path, i.replace(" / ", "_") + ".zip")
                 logging.info(f"Завантажуємо '{download_title}'...")
                 if os.path.isfile(download_title):
                     logging.info(f"'{download_title}' вже існує.")
@@ -150,12 +151,12 @@ class SearchMangaInUa:
 
         def download_alt(path, volumes):
             for i in volumes:
-                download_path = os.path.join(path, i.replace(" / ", "_").replace("/", "\\").strip())
+                i = i.replace("/", "\\")
+                download_path = os.path.join(path, i.strip())
                 mkdir(download_path)
-                count = 1  # workaround i'm not proud of.
-                for chapter in volumes[i]:
-                    download_title = download_path + \
-                        "/" + str(count) + ".png"
+                for count, chapter in enumerate(volumes[i]):
+                    download_title = ''.join(
+                        [download_path, "/", str(count), ".png"])
                     if os.path.isfile(download_title):
                         logging.info(f"'{download_title}' вже існує.")
                         pass
@@ -166,17 +167,13 @@ class SearchMangaInUa:
                         count += 1
                     sleep(
                         delay, download_list=volumes[i], current_item=chapter)
-                count = 1
 
         if desired_path == '':
-            path = self.volume_title.replace(" / ", "_")
-        elif desired_path.endswith('/'):
-            path = desired_path + \
-                self.volume_title.replace(" / ", "_")
+            path = self.volume_title.replace(" / ", "_").replace("/", "\\")
         else:
-            path = desired_path + '/' + \
-                self.volume_title.replace(" / ", "_")
-        path = path.replace("/", "\\").strip()
+            path = os.path.join(
+                desired_path, self.volume_title.replace(" / ", "_").replace("/", "\\"))
+        path = path.strip()
 
         if not volumes:
             logging.critical('Critical. No volumes argument provided!')
