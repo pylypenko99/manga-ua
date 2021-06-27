@@ -22,7 +22,7 @@ def main(argv, QUERY=None, download=False, outputpath='', delay=0):
         if opt == '-h':
             print(f"{usage()}")
             exit(0)
-        elif opt in ("-D", "--debug"):
+        elif opt in ("-v", "--verbose"):
             logs(True)
         elif opt in ("-o", "--output"):
             outputpath = arg
