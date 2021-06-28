@@ -3,17 +3,17 @@ import questionary
 
 from search import SearchMangaInUa
 from kaomoji import check_search_results, check_volumes, check_downloaded
-from config import usage, HEADERS, SITE_URL, logs
+from settings import usage, HEADERS, SITE_URL, logs, default_path
 
 
 def manga_choice(search_results):
     return questionary.select("Оберіть бажаний тайтл.", choices=search_results).ask()
 
 
-def main(argv, QUERY=None, download=False, outputpath='', delay=0):
+def main(argv, QUERY=None, download=False, outputpath=default_path(get_path=True), delay=0):
     try:
         opts, args = getopt.getopt(
-            argv, "hvdo:s:w:", ["help", "verbose", "download-all", "output=", "search=", "delay="])
+            argv, "hvdo:s:w:f:", ["help", "verbose", "download-all", "output=", "search=", "delay=", "default-dir="])
     except getopt.GetoptError:
         print(f"{usage()}")
         exit(2)
@@ -32,6 +32,9 @@ def main(argv, QUERY=None, download=False, outputpath='', delay=0):
             download = True
         elif opt in ("-w", "--delay"):
             delay = int(arg)
+        elif opt in ("-f", "--default-dir"):
+            default_path(set_path=arg)
+            exit(0)
 
     search = SearchMangaInUa(SITE_URL, HEADERS)
 

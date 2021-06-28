@@ -1,5 +1,7 @@
 import sys
 import logging
+import json
+import questionary
 
 SITE_URL = "https://manga.in.ua/mangas/"
 HEADERS = {
@@ -49,6 +51,29 @@ def usage():
             -d, --download-all  Завантажити всі томи знайденої манґи.
                                 Не потребує аргументів.
 
-            -w, --delay=        Перерва між кожним завантаженням, для того аби не перевантажувати пропускну здатність серверів.
+            -w, --delay=        Перерва між кожним завантаженням,
+                                для того аби не перевантажувати пропускну здатність серверів.
+
+            -f, --default_dir=  Встановити шлях до директорії для завантаження за замовчуванням.
     """
     return usage
+
+
+def default_path(set_path=None, get_path=False):
+    if get_path:
+        try:
+            with open("config.json", "r") as config_file:
+                path = json.load(config_file)
+                return path['default_path']
+        except OSError as error:
+            logging.error(f"{error}")
+            return ''
+    if set_path:
+        try:
+            with open("config.json", "w") as config_file:
+                json.dump({'default_path': set_path}, config_file, indent=True)
+            questionary.print(
+                f"Шлях за замовчуванням встановлено: {set_path}", style="italic")
+        except OSError as error:
+            logging.error(f"{error}")
+            exit(1)
