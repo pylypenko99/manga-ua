@@ -2,7 +2,7 @@ import requests
 import os
 import time
 from bs4 import BeautifulSoup as bs
-from config import logging
+from settings import logging
 
 # Another example:
 # https://manga.in.ua/index.php?story={attack+on+titan}&do=search&subaction=search
